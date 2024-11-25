@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  product-service:
+    build:
+      context: ./product-service
+    ports:
+      - "3001:3001"
+    networks:
+      - ecommerce-net
+
+  order-service:
+    build:
+      context: ./order-service
+    ports:
+      - "3002:3002"
+    networks:
+      - ecommerce-net
+
+  user-service:
+    build:
+      context: ./user-service
+    ports:
+      - "3003:3003"
+    networks:
+      - ecommerce-net
+
+networks:
+  ecommerce-net:
+    driver: bridge
