@@ -3,28 +3,33 @@ version: '3.8'
 services:
   product-service:
     build:
-      context: ./product-service
+      context: ./product-service  # Path to the product service directory
     ports:
-      - "3001:3001"
+      - "3001:3001"  # Exposes port 3001 on the host machine
     networks:
-      - ecommerce-net
+      - ecommerce-net  # Attach to a custom network
+    depends_on:
+      - order-service  # Ensure order-service starts before product-service
 
   order-service:
     build:
-      context: ./order-service
+      context: ./order-service  # Path to the order service directory
     ports:
-      - "3002:3002"
+      - "3002:3002"  # Exposes port 3002 on the host machine
     networks:
-      - ecommerce-net
+      - ecommerce-net  # Attach to the custom network
+    depends_on:
+      - user-service  # Ensure user-service starts before order-service
 
   user-service:
     build:
-      context: ./user-service
+      context: ./user-service  # Path to the user service directory
     ports:
-      - "3003:3003"
+      - "3003:3003"  # Exposes port 3003 on the host machine
     networks:
-      - ecommerce-net
+      - ecommerce-net  # Attach to the custom network
 
+# Define a custom network to enable communication between the services
 networks:
   ecommerce-net:
-    driver: bridge
+    driver: bridge  # Use the bridge driver to allow inter-container communication
